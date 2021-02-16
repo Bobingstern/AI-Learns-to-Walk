@@ -54,9 +54,9 @@ class Player {
 
 
 
-    this.ground = makeBox(this.world, b2Body.b2_staticBody, width / 2, height, width, 20 /**/ , 10000, 10000000, 0, 10000)
+    this.ground = makeBox(this.world, b2Body.b2_staticBody, width / 2, height, width*width*width, 20 /**/ , 10000, 10000000, 0, 10000)
 
-    this.groundWidth = width
+    this.groundWidth = width*width*width
     this.groundHeight = 20
 
     this.ground.SetUserData("ground")
@@ -187,7 +187,7 @@ class Player {
 
     push()
     fill(this.color)
-    translate(pos.x * SCALE, pos.y * SCALE)
+    translate(pos.x * SCALE+offset.x, pos.y * SCALE)
     rotate(angle)
     rectMode(CENTER)
     rect(0, 0, this.bodyWidth * 2, this.bodyHeight * 2)
@@ -197,7 +197,7 @@ class Player {
     pos = this.ground.GetPosition()
     angle = this.ground.GetAngle()
     push()
-    translate(pos.x * SCALE, pos.y * SCALE)
+    translate(pos.x * SCALE+offset.x, pos.y * SCALE)
     rectMode(CENTER)
     rect(0, 0, this.groundWidth * 2, this.groundHeight * 2)
     pop()
@@ -207,7 +207,7 @@ class Player {
     angle = this.head.GetAngle()
     push()
     fill(this.color)
-    translate(pos.x * SCALE, pos.y * SCALE)
+    translate(pos.x * SCALE+offset.x, pos.y * SCALE)
     rotate(angle)
     rectMode(CENTER)
     strokeWeight(2)
@@ -218,18 +218,14 @@ class Player {
 
 
 
-    push()
 
-    fill(255, 0, 0)
-    rect(this.lazer.x, this.lazer.y, 10, height)
-    pop()
 
 
     pos = this.leg.GetPosition()
     angle = this.leg.GetAngle()
     push()
     fill(this.color)
-    translate(pos.x * SCALE, pos.y * SCALE)
+    translate(pos.x * SCALE+offset.x, pos.y * SCALE)
     rotate(angle)
     rectMode(CENTER)
     rect(0, 0, this.legWidth * 2, this.legHeight * 2)
@@ -240,7 +236,7 @@ class Player {
     angle = this.leg2.GetAngle()
     push()
     fill(this.color)
-    translate(pos.x * SCALE, pos.y * SCALE)
+    translate(pos.x * SCALE+offset.x, pos.y * SCALE)
     rotate(angle)
     rectMode(CENTER)
     rect(0, 0, this.leg2Width * 2, this.leg2Height * 2)
@@ -252,7 +248,7 @@ class Player {
     angle = this.knee.GetAngle()
     push()
     fill(this.color)
-    translate(pos.x * SCALE, pos.y * SCALE)
+    translate(pos.x * SCALE+offset.x, pos.y * SCALE)
     rotate(angle)
     rectMode(CENTER)
     rect(0, 0, this.kneeWidth * 2, this.kneeHeight * 2)
@@ -263,7 +259,7 @@ class Player {
     angle = this.knee2.GetAngle()
     push()
     fill(this.color)
-    translate(pos.x * SCALE, pos.y * SCALE)
+    translate(pos.x * SCALE+offset.x, pos.y * SCALE)
     rotate(angle)
     rectMode(CENTER)
     rect(0, 0, this.knee2Width * 2, this.knee2Height * 2)
@@ -344,7 +340,7 @@ class Player {
 
 
   ded() {
-
+      this.lazer.x += 1
 
     this.world.DestroyJoint(this.leftLegBodyJoint)
     this.world.DestroyJoint(this.rightLegBodyJoint)
@@ -361,7 +357,7 @@ class Player {
     push()
     noStroke()
     fill(this.color)
-    translate(pos.x * SCALE, pos.y * SCALE)
+    translate(pos.x * SCALE+offset.x, pos.y * SCALE)
     rotate(angle)
     rectMode(CENTER)
     rect(0, 0, this.bodyWidth * 2, this.bodyHeight * 2)
@@ -372,12 +368,12 @@ class Player {
     angle = this.head.GetAngle()
     push()
     fill(this.color)
-    translate(pos.x * SCALE, pos.y * SCALE)
+    translate(pos.x * SCALE+offset.x, pos.y * SCALE)
     rotate(angle)
     rectMode(CENTER)
     strokeWeight(2)
     rect(0, 0, this.headWidth * 2, this.headHeight * 2)
-    
+
 
     pop()
 
@@ -385,18 +381,14 @@ class Player {
     pos = this.ground.GetPosition()
     angle = this.ground.GetAngle()
     push()
-    translate(pos.x * SCALE, pos.y * SCALE)
+    translate(pos.x * SCALE+offset.x, pos.y * SCALE)
     rectMode(CENTER)
     rect(0, 0, this.groundWidth * 2, this.groundHeight * 2)
     pop()
 
 
 
-    push()
 
-    fill(255, 0, 0)
-    rect(this.lazer.x, this.lazer.y, 10, height)
-    pop()
 
 
     pos = this.leg.GetPosition()
@@ -404,7 +396,7 @@ class Player {
     push()
     noStroke()
     fill(this.color)
-    translate(pos.x * SCALE, pos.y * SCALE)
+    translate(pos.x * SCALE+offset.x, pos.y * SCALE)
     rotate(angle)
     rectMode(CENTER)
     rect(0, 0, this.legWidth * 2, this.legHeight * 2)
@@ -416,7 +408,7 @@ class Player {
     push()
     noStroke()
     fill(this.color)
-    translate(pos.x * SCALE, pos.y * SCALE)
+    translate(pos.x * SCALE+offset.x, pos.y * SCALE)
     rotate(angle)
     rectMode(CENTER)
     rect(0, 0, this.leg2Width * 2, this.leg2Height * 2)
@@ -429,7 +421,7 @@ class Player {
     push()
     noStroke()
     fill(this.color)
-    translate(pos.x * SCALE, pos.y * SCALE)
+    translate(pos.x * SCALE+offset.x, pos.y * SCALE)
     rotate(angle)
     rectMode(CENTER)
     rect(0, 0, this.kneeWidth * 2, this.kneeHeight * 2)
@@ -441,7 +433,7 @@ class Player {
     push()
     noStroke()
     fill(this.color)
-    translate(pos.x * SCALE, pos.y * SCALE)
+    translate(pos.x * SCALE+offset.x, pos.y * SCALE)
     rotate(angle)
     rectMode(CENTER)
     rect(0, 0, this.knee2Width * 2, this.knee2Height * 2)

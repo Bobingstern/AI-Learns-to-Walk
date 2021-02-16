@@ -47,7 +47,7 @@ var ground
 var SCALE = 30
 var world
 var playerIndex = 1;
-
+var offset
 
 
 
@@ -114,6 +114,7 @@ function mouseClicked() {
   //makeBox(b2Body.b2_dynamicBody, mouseX, mouseY, 50, 50, 0.5, 1, 0.3)
 }
 var img
+
 function preload(){
 
   img = loadImage('https://raw.githubusercontent.com/Bobingstern/AI-Learns-to-Walk/gh-pages/boi.png');
@@ -121,7 +122,7 @@ function preload(){
 
 }
 
-
+var best
 function setup() {
   window.canvas = createCanvas(1280, 720);
   //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
@@ -129,14 +130,42 @@ function setup() {
   img.resize(40, 40)
   population = new Population(500);
   humanPlayer = new Player();
+  offset = createVector(0, 0)
+}
+
+
+
+function getBest(){
+  let best_player = null
+  let best_fitness = 0
+  for (var i=0;i<population.players.length;i++){
+    if (population.players[i].score > best_fitness && !(population.players[i].dead)) {
+      best_fitness = population.players[i].score
+      best_player = population.players[i]
+    }
+  }
+  return best_player
 }
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 function draw() {
+
+
+
+
+
   background(100)
   drawToScreen();
+  offset.x = offset.x-1
 
 
 
+
+  push()
+
+  fill(255, 0, 0)
+  translate(population.players[0].lazer.x+offset.x, population.players[0].lazer.y)
+  rect(0, 0, 10, height)
+  pop()
 
 
   if (showBestEachGen) { //show the best of each gen
@@ -151,8 +180,28 @@ function draw() {
     } else { //all dead
       //genetic algorithm
       //playerIndex = 1
+      offset.x = 0
       population.naturalSelection();
     }
+  }
+
+
+  let bestPlayer = getBest()
+  if (!(bestPlayer == null)) {
+    push()
+    let easing = 0.05;
+    let targetX = -1*bestPlayer.body.GetPosition().x*SCALE+200;
+    let dx = targetX - offset.x;
+    offset.x += dx * easing;
+
+
+    translate(offset.x, 0)
+    fill(0, 0, 0)
+    for (var i=0;i<100;i++){
+      //text(i*10, i*300, 100)
+      rect(i*300, height-20, 10, 20)
+    }
+    pop()
   }
 }
 //-----------------------------------------------------------------------------------
