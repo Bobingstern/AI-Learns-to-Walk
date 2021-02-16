@@ -59,7 +59,7 @@ class Player {
     this.groundWidth = width*width*width
     this.groundHeight = 20
 
-    this.ground.SetUserData("ground")
+    this.ground.SetUserData("ground") 
 
 
 
