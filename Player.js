@@ -25,6 +25,11 @@ class Player {
     this.bodyHeight = 50
     this.body.SetUserData("body")
 
+    this.head = makeBox(this.world, b2Body.b2_dynamicBody, 100, 5 + this.offsetX, 20, 20 /**/ , 1, 10, 0.1, 10)
+    this.headWidth = 20
+    this.headHeight = 20
+    this.head.SetUserData("body")
+
 
     this.leg = makeBox(this.world, b2Body.b2_dynamicBody, 75, 150 + this.offsetX, 11, 25 /**/ , 1, 10, 0.1, 10)
     this.legWidth = 11
@@ -106,6 +111,21 @@ class Player {
     this.leftLegBodyJoint = this.world.CreateJoint(leftLegBodyJointDef)
 
 
+
+    var headDef = new b2RevoluteJointDef()
+    headDef.bodyA = this.body;
+    headDef.bodyB = this.head;
+    headDef.collideConnected = false;
+    headDef.localAnchorA.Set(0, -50 / SCALE)
+    headDef.localAnchorB.Set(0, 20 / SCALE)
+    headDef.enableLimit = true
+    headDef.lowerAngle = radians(1)
+    headDef.upperAngle = radians(1)
+
+
+    this.headJoint = this.world.CreateJoint(headDef)
+
+
     var rightLegBodyJointDef = new b2RevoluteJointDef()
     rightLegBodyJointDef.bodyA = this.body;
     rightLegBodyJointDef.bodyB = this.leg2;
@@ -180,6 +200,17 @@ class Player {
     translate(pos.x * SCALE, pos.y * SCALE)
     rectMode(CENTER)
     rect(0, 0, this.groundWidth * 2, this.groundHeight * 2)
+    pop()
+
+
+    pos = this.head.GetPosition()
+    angle = this.head.GetAngle()
+    push()
+    fill(this.color)
+    translate(pos.x * SCALE, pos.y * SCALE)
+    rotate(angle)
+    rectMode(CENTER)
+    rect(0, 0, this.headWidth * 2, this.headHeight * 2)
     pop()
 
 
@@ -316,6 +347,7 @@ class Player {
     this.world.DestroyJoint(this.rightLegBodyJoint)
     this.world.DestroyJoint(this.leftKneeBodyJoint)
     this.world.DestroyJoint(this.rightKneeBodyJoint)
+    this.world.DestroyJoint(this.headJoint)
 
 
     var pos = this.body.GetPosition()
@@ -330,6 +362,17 @@ class Player {
     rotate(angle)
     rectMode(CENTER)
     rect(0, 0, this.bodyWidth * 2, this.bodyHeight * 2)
+    pop()
+
+
+    pos = this.head.GetPosition()
+    angle = this.head.GetAngle()
+    push()
+    fill(this.color)
+    translate(pos.x * SCALE, pos.y * SCALE)
+    rotate(angle)
+    rectMode(CENTER)
+    rect(0, 0, this.headWidth * 2, this.headHeight * 2)
     pop()
 
 
