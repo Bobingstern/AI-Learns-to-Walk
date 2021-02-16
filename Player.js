@@ -210,7 +210,10 @@ class Player {
     translate(pos.x * SCALE, pos.y * SCALE)
     rotate(angle)
     rectMode(CENTER)
+    strokeWeight(2)
     rect(0, 0, this.headWidth * 2, this.headHeight * 2)
+    image(img, -20, -20)
+
     pop()
 
 
@@ -372,7 +375,10 @@ class Player {
     translate(pos.x * SCALE, pos.y * SCALE)
     rotate(angle)
     rectMode(CENTER)
+    strokeWeight(2)
     rect(0, 0, this.headWidth * 2, this.headHeight * 2)
+    
+
     pop()
 
 
