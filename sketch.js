@@ -113,13 +113,20 @@ function makeBox(world, bodyType, x, y, w, h, density, friction, res, mass, isSe
 function mouseClicked() {
   //makeBox(b2Body.b2_dynamicBody, mouseX, mouseY, 50, 50, 0.5, 1, 0.3)
 }
+var img
+function preload(){
+
+  img = loadImage('https://raw.githubusercontent.com/Bobingstern/AI-Learns-to-Walk/gh-pages/boi.png');
+
+
+}
 
 
 function setup() {
   window.canvas = createCanvas(1280, 720);
   //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
   frameRate(30)
-
+  img.resize(40, 40)
   population = new Population(500);
   humanPlayer = new Player();
 }
