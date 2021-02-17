@@ -18,7 +18,7 @@ class Player {
     this.colGroup = playerIndex
     this.world = new b2World(new b2Vec2(0, 50))
     this.offsetX = 450
-    this.angle_limit = 100;
+    this.angle_limit = 45;
 
     //-------Bodies
     {
@@ -26,31 +26,31 @@ class Player {
     this.bodyWidth = 50
     this.bodyHeight = 50
     this.body.SetUserData("body")
-
-    this.head = makeBox(this.world, b2Body.b2_dynamicBody, 100, 5 + this.offsetX, 20, 20 /**/ , 1, 10, 0.1, 10)
+0.003
+    this.head = makeBox(this.world, b2Body.b2_dynamicBody, 100, 5 + this.offsetX, 20, 20 /**/ , 1, 0.003, 0.1, 10)
     this.headWidth = 20
     this.headHeight = 20
     this.head.SetUserData("body")
 
 
-    this.leg = makeBox(this.world, b2Body.b2_dynamicBody, 75, 150 + this.offsetX, 11, 25 /**/ , 1, 10, 0.1, 10)
+    this.leg = makeBox(this.world, b2Body.b2_dynamicBody, 75, 150 + this.offsetX, 11, 25 /**/ , 1, 0.003, 0.1, 10)
     this.legWidth = 11
     this.legHeight = 25
     this.leg.SetUserData("body")
 
 
-    this.leg2 = makeBox(this.world, b2Body.b2_dynamicBody, 125, 150 + this.offsetX, 11, 25 /**/ , 1, 10, 0.1, 10)
+    this.leg2 = makeBox(this.world, b2Body.b2_dynamicBody, 125, 150 + this.offsetX, 11, 25 /**/ , 1, 0.003, 0.1, 10)
     this.leg2Width = 11
     this.leg2Height = 25
     this.leg2.SetUserData("body")
 
 
-    this.knee = makeBox(this.world, b2Body.b2_dynamicBody, 75, 200 + this.offsetX, 11, 25 /**/ , 1, 10, 0.1, 10)
+    this.knee = makeBox(this.world, b2Body.b2_dynamicBody, 75, 200 + this.offsetX, 11, 25 /**/ , 1, 0.003, 0.1, 10)
     this.kneeWidth = 11
     this.kneeHeight = 25
 
 
-    this.knee2 = makeBox(this.world, b2Body.b2_dynamicBody, 125, 200 + this.offsetX, 11, 25 /**/ , 1, 10, 0.1, 10)
+    this.knee2 = makeBox(this.world, b2Body.b2_dynamicBody, 125, 200 + this.offsetX, 11, 25 /**/ , 1, 0.003, 0.1, 10)
     this.knee2Width = 11
     this.knee2Height = 25
 
@@ -59,7 +59,7 @@ class Player {
 
 
 
-    this.ground = makeBox(this.world, b2Body.b2_staticBody, width / 2, height, width*width*width, 20 /**/ , 10000, 10000000, 0, 10000)
+    this.ground = makeBox(this.world, b2Body.b2_staticBody, width / 2, height, width*width*width, 20 /**/ , 10000, 1, 0, 10000)
 
     this.groundWidth = width*width*width
     this.groundHeight = 20
@@ -100,7 +100,7 @@ class Player {
 
 
 
-    this.lazer = createVector(-50, 0)
+    this.lazer = createVector(-100, 0)
     //-------
 
     //-----Joints
@@ -181,7 +181,7 @@ class Player {
 
     this.color = color(255, 255, 255)
 
-    this.speed = 100
+    this.speed = 600
 
 
     playerIndex++
@@ -335,7 +335,6 @@ class Player {
       if (this.decision[7] > 0.5) {
         this.rotateRight(this.leftKneeBodyJoint)
       }
-
 
 
 
@@ -507,6 +506,7 @@ class Player {
 
 
   rotateRight(Joint) {
+
     Joint.SetMotorSpeed(radians(-this.speed))
 
   }

@@ -502,8 +502,15 @@ class Genome {
     // text("gradient", nodePoses[4].x - 20, nodePoses[4].y);
     // text("bias", nodePoses[5].x - 20, nodePoses[5].y);
     // textAlign(LEFT);
-    // text("gas", nodePoses[nodePoses.length - 2].x + 20, nodePoses[nodePoses.length - 2].y);
-    // text("break", nodePoses[nodePoses.length - 1].x + 20, nodePoses[nodePoses.length - 1].y);
+    text("Left Leg Left", nodePoses[nodePoses.length - 2].x + 50, nodePoses[nodePoses.length - 8].y);
+    text("Right Leg Left", nodePoses[nodePoses.length - 1].x + 50, nodePoses[nodePoses.length - 7].y);
+    text("Left Knee Left", nodePoses[nodePoses.length - 2].x + 50, nodePoses[nodePoses.length - 6].y);
+    text("Right Knee Left", nodePoses[nodePoses.length - 1].x + 50, nodePoses[nodePoses.length - 5].y);
+
+    text("Left Leg Right", nodePoses[nodePoses.length - 2].x + 50, nodePoses[nodePoses.length - 4].y);
+    text("Right Leg Right", nodePoses[nodePoses.length - 1].x + 50, nodePoses[nodePoses.length - 3].y);
+    text("Left Knee Right", nodePoses[nodePoses.length - 2].x + 50, nodePoses[nodePoses.length - 2].y);
+    text("Right Knee Right", nodePoses[nodePoses.length - 1].x + 50, nodePoses[nodePoses.length - 1].y);
 
 
 
