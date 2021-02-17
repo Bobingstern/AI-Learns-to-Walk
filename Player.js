@@ -20,6 +20,7 @@ class Player {
     this.offsetX = 450
 
     //-------Bodies
+    {
     this.body = makeBox(this.world, b2Body.b2_dynamicBody, 100, 100 + this.offsetX, 50, 50 /**/ , 1, 10, 0.1, 10)
     this.bodyWidth = 50
     this.bodyHeight = 50
@@ -54,6 +55,9 @@ class Player {
 
 
 
+
+
+
     this.ground = makeBox(this.world, b2Body.b2_staticBody, width / 2, height, width*width*width, 20 /**/ , 10000, 10000000, 0, 10000)
 
     this.groundWidth = width*width*width
@@ -61,9 +65,9 @@ class Player {
 
     this.ground.SetUserData("ground")
 
+  }
 
-
-
+    //-----
 
 
     this.listener = new Box2D.Dynamics.b2ContactListener;
@@ -98,6 +102,7 @@ class Player {
     //-------
 
     //-----Joints
+    {
     var leftLegBodyJointDef = new b2RevoluteJointDef()
     leftLegBodyJointDef.bodyA = this.body;
     leftLegBodyJointDef.bodyB = this.leg;
@@ -169,7 +174,7 @@ class Player {
     rightKneeBodyJointDef.upperAngle = radians(75)
 
     this.rightKneeBodyJoint = this.world.CreateJoint(rightKneeBodyJointDef)
-
+  }
     //-------
 
     this.color = color(255, 255, 255)
@@ -181,6 +186,11 @@ class Player {
   }
 
   //---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
   show() {
     var pos = this.body.GetPosition()
     var angle = this.body.GetAngle()

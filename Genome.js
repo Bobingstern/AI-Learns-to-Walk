@@ -292,7 +292,7 @@ class Genome {
 
 
     var rand1 = random(1);
-    if (rand1 < 0.8) { // 80% of the time mutate weights
+    if (rand1 < mutationRate) { // 80% of the time mutate weights
 
       for (var i = 0; i < this.genes.length; i++) {
         this.genes[i].mutateWeight();
@@ -301,14 +301,14 @@ class Genome {
 
     //5% of the time add a new connection
     var rand2 = random(1);
-    if (rand2 < 0.05) {
+    if (rand2 < 0.3) {
 
       this.addConnection(innovationHistory);
     }
 
     //1% of the time add a node
     var rand3 = random(1);
-    if (rand3 < 0.01) {
+    if (rand3 < 0.2) {
 
       this.addNode(innovationHistory);
     }

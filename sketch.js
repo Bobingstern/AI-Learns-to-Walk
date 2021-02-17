@@ -115,7 +115,7 @@ function mouseClicked() {
 }
 var img
 
-function preload(){
+function preload() {
 
   img = loadImage('https://raw.githubusercontent.com/Bobingstern/AI-Learns-to-Walk/gh-pages/boi.png');
 
@@ -130,6 +130,9 @@ let started = false
 
 let increase
 let decrease
+
+let mutationRate = 0.5
+
 function setup() {
   window.canvas = createCanvas(1280, 720);
   //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
@@ -146,23 +149,27 @@ function setup() {
   increase = createButton("Population+")
   increase.size(100, 50)
   increase.position(19, 69);
-  increase.mousePressed(function(){popSize+=10});
+  increase.mousePressed(function() {
+    popSize += 10
+  });
 
   decrease = createButton("Population-")
   decrease.size(100, 50)
   decrease.position(19, 119);
-  decrease.mousePressed(function(){popSize-=10});
+  decrease.mousePressed(function() {
+    popSize -= 10
+  });
 
 }
 
-function START(){
+function START() {
   running = true
 }
 
-function getBest(){
+function getBest() {
   let best_player = null
   let best_fitness = 0
-  for (var i=0;i<population.players.length;i++){
+  for (var i = 0; i < population.players.length; i++) {
     if (population.players[i].score > best_fitness && !(population.players[i].dead)) {
       best_fitness = population.players[i].score
       best_player = population.players[i]
@@ -175,8 +182,8 @@ function draw() {
 
 
   background(100)
-  if (running){
-    if (started == false){
+  if (running) {
+    if (started == false) {
       population = new Population(popSize);
       humanPlayer = new Player();
       started = true
@@ -186,7 +193,7 @@ function draw() {
     }
 
     drawToScreen();
-    offset.x = offset.x-1
+    offset.x = offset.x - 1
 
 
 
@@ -194,7 +201,7 @@ function draw() {
     push()
 
     fill(255, 0, 0)
-    translate(population.players[0].lazer.x+offset.x, population.players[0].lazer.y)
+    translate(population.players[0].lazer.x + offset.x, population.players[0].lazer.y)
     rect(0, 0, 10, height)
     pop()
 
@@ -221,23 +228,22 @@ function draw() {
     if (!(bestPlayer == null)) {
       push()
       let easing = 0.05;
-      let targetX = -1*bestPlayer.body.GetPosition().x*SCALE+200;
+      let targetX = -1 * bestPlayer.body.GetPosition().x * SCALE + 200;
       let dx = targetX - offset.x;
       offset.x += dx * easing;
 
 
       translate(offset.x, 0)
       fill(0, 0, 0)
-      for (var i=0;i<100;i++){
+      for (var i = 0; i < 100; i++) {
         //text(i*10, i*300, 100)
-        rect(i*300, height-20, 10, 20)
+        rect(i * 300, height - 20, 10, 20)
       }
       pop()
     }
-  }
-  else{
+  } else {
     textSize(50)
-    text("Population Size: "+popSize, 600, 100)
+    text("Population Size: " + popSize, 600, 100)
   }
 }
 //-----------------------------------------------------------------------------------
