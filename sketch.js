@@ -133,7 +133,7 @@ let decrease
 function setup() {
   window.canvas = createCanvas(1280, 720);
   //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
-  frameRate(30)
+  frameRate(60)
   img.resize(40, 40)
 
   offset = createVector(0, 0)

@@ -33,7 +33,7 @@ class Population {
         }
       } else {
         if (!showBest) {
-          this.players[i].world.Step(1 / 30, 10, 10)
+          this.players[i].world.Step(1 / 60, 10, 10)
           this.players[i].ded()
         }
 
