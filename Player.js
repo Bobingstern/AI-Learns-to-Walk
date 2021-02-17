@@ -18,15 +18,15 @@ class Player {
     this.colGroup = playerIndex
     this.world = new b2World(new b2Vec2(0, 50))
     this.offsetX = 450
-    this.angle_limit = 45;
+    this.angle_limit = 90;
 
     //-------Bodies
     {
-    this.body = makeBox(this.world, b2Body.b2_dynamicBody, 100, 100 + this.offsetX, 50, 50 /**/ , 0.1, 10, 0.1, 1)
+    this.body = makeBox(this.world, b2Body.b2_dynamicBody, 100, 100 + this.offsetX, 50, 50 /**/ , 0.1, 0.003, 0.1, 1)
     this.bodyWidth = 50
     this.bodyHeight = 50
     this.body.SetUserData("body")
-0.003
+
     this.head = makeBox(this.world, b2Body.b2_dynamicBody, 100, 5 + this.offsetX, 20, 20 /**/ , 1, 0.003, 0.1, 10)
     this.headWidth = 20
     this.headHeight = 20
@@ -483,22 +483,22 @@ class Player {
     this.vision[2] = this.body.GetLinearVelocity().y
     this.vision[3] = this.ground.GetPosition().y - this.body.GetPosition().y
 
-    this.vision[4] = this.leg.GetAngle()
+    this.vision[4] = this.leftLegBodyJoint.GetJointAngle()
     this.vision[5] = this.leg.GetLinearVelocity().x
     this.vision[6] = this.leg.GetLinearVelocity().y
     this.vision[7] = this.ground.GetPosition().y - this.leg.GetPosition().y
 
-    this.vision[8] = this.leg2.GetAngle()
+    this.vision[8] = this.rightLegBodyJoint.GetJointAngle()
     this.vision[9] = this.leg2.GetLinearVelocity().x
     this.vision[10] = this.leg2.GetLinearVelocity().y
     this.vision[11] = this.ground.GetPosition().y - this.leg2.GetPosition().y
 
-    this.vision[12] = this.knee.GetAngle()
+    this.vision[12] = this.leftKneeBodyJoint.GetJointAngle()
     this.vision[13] = this.knee.GetLinearVelocity().x
     this.vision[14] = this.knee.GetLinearVelocity().y
     this.vision[15] = this.ground.GetPosition().y - this.knee.GetPosition().y
 
-    this.vision[16] = this.knee2.GetAngle()
+    this.vision[16] = this.rightKneeBodyJoint.GetJointAngle()
     this.vision[17] = this.knee2.GetLinearVelocity().x
     this.vision[19] = this.knee2.GetLinearVelocity().y
     this.vision[19] = this.ground.GetPosition().y - this.knee2.GetPosition().y
