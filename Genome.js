@@ -486,7 +486,7 @@ class Genome {
       textSize(10);
       fill(0);
       textAlign(CENTER, CENTER);
-      text(nodeNumbers[i], nodePoses[i].x, nodePoses[i].y);
+      //text(nodeNumbers[i], nodePoses[i].x, nodePoses[i].y);
 
     }
 

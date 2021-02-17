@@ -131,7 +131,7 @@ let started = false
 let increase
 let decrease
 
-let mutationRate = 0.5
+let mutationRate = 0.8
 
 function setup() {
   window.canvas = createCanvas(1280, 720);
@@ -193,7 +193,7 @@ function draw() {
     }
 
     drawToScreen();
-    offset.x = offset.x - 1
+    //offset.x = offset.x - 1
 
 
 
@@ -230,14 +230,20 @@ function draw() {
       let easing = 0.05;
       let targetX = -1 * bestPlayer.body.GetPosition().x * SCALE + 200;
       let dx = targetX - offset.x;
-      offset.x += dx * easing;
+      if (targetX*-1 > 10){
+
+        offset.x += dx * easing;
+      }
 
 
       translate(offset.x, 0)
       fill(0, 0, 0)
-      for (var i = 0; i < 100; i++) {
+      for (var i = 0; i < 1000; i++) {
         //text(i*10, i*300, 100)
-        rect(i * 300, height - 20, 10, 20)
+        fill(0)
+        rect(i * 20, height - 20, 10, 20)
+        fill(255, 255, 0)
+        rect(i * 20+10, height - 20, 10, 20)
       }
       pop()
     }

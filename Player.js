@@ -13,15 +13,16 @@ class Player {
     this.gen = 0;
 
     this.genomeInputs = 20;
-    this.genomeOutputs = 4;
+    this.genomeOutputs = 8;
     this.brain = new Genome(this.genomeInputs, this.genomeOutputs);
     this.colGroup = playerIndex
     this.world = new b2World(new b2Vec2(0, 50))
     this.offsetX = 450
+    this.angle_limit = 100;
 
     //-------Bodies
     {
-    this.body = makeBox(this.world, b2Body.b2_dynamicBody, 100, 100 + this.offsetX, 50, 50 /**/ , 1, 10, 0.1, 10)
+    this.body = makeBox(this.world, b2Body.b2_dynamicBody, 100, 100 + this.offsetX, 50, 50 /**/ , 0.1, 10, 0.1, 1)
     this.bodyWidth = 50
     this.bodyHeight = 50
     this.body.SetUserData("body")
@@ -81,6 +82,7 @@ class Player {
       var fixB = contact.GetFixtureB().GetBody().GetUserData()
 
       if (fixA == "ground" && fixB == "body" || fixA == "body" && fixB == "ground") {
+        this.fitness -= 100
         this.dead = true
 
       }
@@ -110,8 +112,8 @@ class Player {
     leftLegBodyJointDef.localAnchorA.Set(-25 / SCALE, 50 / SCALE)
     leftLegBodyJointDef.localAnchorB.Set(0, -25 / SCALE)
     leftLegBodyJointDef.enableLimit = true
-    leftLegBodyJointDef.lowerAngle = radians(-75)
-    leftLegBodyJointDef.upperAngle = radians(75)
+    leftLegBodyJointDef.lowerAngle = radians(-this.angle_limit)
+    leftLegBodyJointDef.upperAngle = radians(this.angle_limit)
 
     this.leftLegBodyJoint = this.world.CreateJoint(leftLegBodyJointDef)
 
@@ -138,8 +140,8 @@ class Player {
     rightLegBodyJointDef.localAnchorA.Set(25 / SCALE, 50 / SCALE)
     rightLegBodyJointDef.localAnchorB.Set(0, -25 / SCALE)
     rightLegBodyJointDef.enableLimit = true
-    rightLegBodyJointDef.lowerAngle = radians(-75)
-    rightLegBodyJointDef.upperAngle = radians(75)
+    rightLegBodyJointDef.lowerAngle = radians(-this.angle_limit)
+    rightLegBodyJointDef.upperAngle = radians(this.angle_limit)
 
     this.rightLegBodyJoint = this.world.CreateJoint(rightLegBodyJointDef)
 
@@ -153,8 +155,8 @@ class Player {
     leftKneeBodyJointDef.localAnchorA.Set(0, 25 / SCALE)
     leftKneeBodyJointDef.localAnchorB.Set(0, -25 / SCALE)
     leftKneeBodyJointDef.enableLimit = true
-    leftKneeBodyJointDef.lowerAngle = radians(-75)
-    leftKneeBodyJointDef.upperAngle = radians(75)
+    leftKneeBodyJointDef.lowerAngle = radians(-this.angle_limit)
+    leftKneeBodyJointDef.upperAngle = radians(this.angle_limit)
     leftKneeBodyJointDef.enableMotor = true
     leftKneeBodyJointDef.maxMotorTorque = 100000
     //leftKneeBodyJointDef.motorSpeed = radians(500)
@@ -170,8 +172,8 @@ class Player {
     rightKneeBodyJointDef.localAnchorA.Set(0, 25 / SCALE)
     rightKneeBodyJointDef.localAnchorB.Set(0, -25 / SCALE)
     rightKneeBodyJointDef.enableLimit = true
-    rightKneeBodyJointDef.lowerAngle = radians(-75)
-    rightKneeBodyJointDef.upperAngle = radians(75)
+    rightKneeBodyJointDef.lowerAngle = radians(-this.angle_limit)
+    rightKneeBodyJointDef.upperAngle = radians(this.angle_limit)
 
     this.rightKneeBodyJoint = this.world.CreateJoint(rightKneeBodyJointDef)
   }
@@ -179,7 +181,7 @@ class Player {
 
     this.color = color(255, 255, 255)
 
-    this.speed = 200
+    this.speed = 100
 
 
     playerIndex++
@@ -297,28 +299,40 @@ class Player {
 
       if (this.decision[0] > 0.5) {
         this.rotateLeft(this.leftLegBodyJoint)
-      } else {
-        this.rotateRight(this.leftLegBodyJoint)
       }
 
 
       if (this.decision[1] > 0.5) {
         this.rotateLeft(this.rightLegBodyJoint)
-      } else {
-        this.rotateRight(this.rightLegBodyJoint)
       }
 
 
       if (this.decision[2] > 0.5) {
         this.rotateLeft(this.rightKneeBodyJoint)
-      } else {
-        this.rotateRight(this.rightKneeBodyJoint)
       }
 
 
       if (this.decision[3] > 0.5) {
         this.rotateLeft(this.leftKneeBodyJoint)
-      } else {
+      }
+
+
+      if (this.decision[4] > 0.5) {
+        this.rotateRight(this.leftLegBodyJoint)
+      }
+
+
+      if (this.decision[5] > 0.5) {
+        this.rotateRight(this.rightLegBodyJoint)
+      }
+
+
+      if (this.decision[6] > 0.5) {
+        this.rotateRight(this.rightKneeBodyJoint)
+      }
+
+
+      if (this.decision[7] > 0.5) {
         this.rotateRight(this.leftKneeBodyJoint)
       }
 
@@ -336,7 +350,7 @@ class Player {
       this.fitness += 0.1
       this.score = this.fitness
       this.lifespan += 0.001
-      this.fitness += this.body.GetPosition().x * SCALE / width
+      //this.fitness += this.body.GetPosition().x * SCALE / width /width
     }
 
 
@@ -381,7 +395,7 @@ class Player {
     translate(pos.x * SCALE+offset.x, pos.y * SCALE)
     rotate(angle)
     rectMode(CENTER)
-    strokeWeight(2)
+    noStroke()
     rect(0, 0, this.headWidth * 2, this.headHeight * 2)
 
 
