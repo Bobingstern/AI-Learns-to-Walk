@@ -59,7 +59,7 @@ class Player {
     this.groundWidth = width*width*width
     this.groundHeight = 20
 
-    this.ground.SetUserData("ground") 
+    this.ground.SetUserData("ground")
 
 
 
@@ -174,7 +174,7 @@ class Player {
 
     this.color = color(255, 255, 255)
 
-
+    this.speed = 200
 
 
     playerIndex++
@@ -483,12 +483,12 @@ class Player {
 
 
   rotateRight(Joint) {
-    Joint.SetMotorSpeed(radians(-500))
+    Joint.SetMotorSpeed(radians(-this.speed))
 
   }
 
   rotateLeft(Joint) {
-    Joint.SetMotorSpeed(radians(500))
+    Joint.SetMotorSpeed(radians(this.speed))
 
   }
 

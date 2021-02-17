@@ -123,17 +123,41 @@ function preload(){
 }
 
 var best
+var running = false;
+let start
+let popSize = 100
+let started = false
+
+let increase
+let decrease
 function setup() {
   window.canvas = createCanvas(1280, 720);
   //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
   frameRate(30)
   img.resize(40, 40)
-  population = new Population(500);
-  humanPlayer = new Player();
+
   offset = createVector(0, 0)
+
+  start = createButton('Start');
+  start.size(100, 50)
+  start.position(19, 19);
+  start.mousePressed(START);
+
+  increase = createButton("Population+")
+  increase.size(100, 50)
+  increase.position(19, 69);
+  increase.mousePressed(function(){popSize+=10});
+
+  decrease = createButton("Population-")
+  decrease.size(100, 50)
+  decrease.position(19, 119);
+  decrease.mousePressed(function(){popSize-=10});
+
 }
 
-
+function START(){
+  running = true
+}
 
 function getBest(){
   let best_player = null
@@ -150,58 +174,70 @@ function getBest(){
 function draw() {
 
 
-
-
-
   background(100)
-  drawToScreen();
-  offset.x = offset.x-1
+  if (running){
+    if (started == false){
+      population = new Population(popSize);
+      humanPlayer = new Player();
+      started = true
+      decrease.remove()
+      increase.remove()
+      start.remove()
+    }
+
+    drawToScreen();
+    offset.x = offset.x-1
 
 
 
 
-  push()
+    push()
 
-  fill(255, 0, 0)
-  translate(population.players[0].lazer.x+offset.x, population.players[0].lazer.y)
-  rect(0, 0, 10, height)
-  pop()
+    fill(255, 0, 0)
+    translate(population.players[0].lazer.x+offset.x, population.players[0].lazer.y)
+    rect(0, 0, 10, height)
+    pop()
 
 
-  if (showBestEachGen) { //show the best of each gen
-    showBestPlayersForEachGeneration();
-  } else if (humanPlaying) { //if the user is controling the ship[
-    showHumanPlaying();
-  } else if (runBest) { // if replaying the best ever game
-    showBestEverPlayer();
-  } else { //if just evolving normally
-    if (!population.done()) { //if any players are alive then update them
-      population.updateAlive();
-    } else { //all dead
-      //genetic algorithm
-      //playerIndex = 1
-      offset.x = 0
-      population.naturalSelection();
+    if (showBestEachGen) { //show the best of each gen
+      showBestPlayersForEachGeneration();
+    } else if (humanPlaying) { //if the user is controling the ship[
+      showHumanPlaying();
+    } else if (runBest) { // if replaying the best ever game
+      showBestEverPlayer();
+    } else { //if just evolving normally
+      if (!population.done()) { //if any players are alive then update them
+        population.updateAlive();
+      } else { //all dead
+        //genetic algorithm
+        //playerIndex = 1
+        offset.x = 0
+        population.naturalSelection();
+      }
+    }
+
+
+    let bestPlayer = getBest()
+    if (!(bestPlayer == null)) {
+      push()
+      let easing = 0.05;
+      let targetX = -1*bestPlayer.body.GetPosition().x*SCALE+200;
+      let dx = targetX - offset.x;
+      offset.x += dx * easing;
+
+
+      translate(offset.x, 0)
+      fill(0, 0, 0)
+      for (var i=0;i<100;i++){
+        //text(i*10, i*300, 100)
+        rect(i*300, height-20, 10, 20)
+      }
+      pop()
     }
   }
-
-
-  let bestPlayer = getBest()
-  if (!(bestPlayer == null)) {
-    push()
-    let easing = 0.05;
-    let targetX = -1*bestPlayer.body.GetPosition().x*SCALE+200;
-    let dx = targetX - offset.x;
-    offset.x += dx * easing;
-
-
-    translate(offset.x, 0)
-    fill(0, 0, 0)
-    for (var i=0;i<100;i++){
-      //text(i*10, i*300, 100)
-      rect(i*300, height-20, 10, 20)
-    }
-    pop()
+  else{
+    textSize(50)
+    text("Population Size: "+popSize, 600, 100)
   }
 }
 //-----------------------------------------------------------------------------------
