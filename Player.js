@@ -78,8 +78,8 @@ class Player {
     this.listener.BeginContact = function(contact) {
 
       // console.log(contact.GetFixtureA().GetBody().GetUserData());
-      var fixA = contact.GetFixtureA().GetBody().GetUserData()
-      var fixB = contact.GetFixtureB().GetBody().GetUserData()
+      let fixA = contact.GetFixtureA().GetBody().GetUserData()
+      let fixB = contact.GetFixtureB().GetBody().GetUserData()
 
       if (fixA == "ground" && fixB == "body" || fixA == "body" && fixB == "ground") {
         this.fitness -= 100
@@ -105,7 +105,7 @@ class Player {
 
     //-----Joints
     {
-    var leftLegBodyJointDef = new b2RevoluteJointDef()
+    let leftLegBodyJointDef = new b2RevoluteJointDef()
     leftLegBodyJointDef.bodyA = this.body;
     leftLegBodyJointDef.bodyB = this.leg;
     leftLegBodyJointDef.collideConnected = false;
@@ -114,12 +114,13 @@ class Player {
     leftLegBodyJointDef.enableLimit = true
     leftLegBodyJointDef.lowerAngle = radians(-this.angle_limit)
     leftLegBodyJointDef.upperAngle = radians(this.angle_limit)
-
+    leftLegBodyJointDef.enableMotor = true
+    leftLegBodyJointDef.maxMotorTorque = 100000
     this.leftLegBodyJoint = this.world.CreateJoint(leftLegBodyJointDef)
 
 
 
-    var headDef = new b2RevoluteJointDef()
+    let headDef = new b2RevoluteJointDef()
     headDef.bodyA = this.body;
     headDef.bodyB = this.head;
     headDef.collideConnected = false;
@@ -133,7 +134,7 @@ class Player {
     this.headJoint = this.world.CreateJoint(headDef)
 
 
-    var rightLegBodyJointDef = new b2RevoluteJointDef()
+    let rightLegBodyJointDef = new b2RevoluteJointDef()
     rightLegBodyJointDef.bodyA = this.body;
     rightLegBodyJointDef.bodyB = this.leg2;
     rightLegBodyJointDef.collideConnected = false;
@@ -142,13 +143,15 @@ class Player {
     rightLegBodyJointDef.enableLimit = true
     rightLegBodyJointDef.lowerAngle = radians(-this.angle_limit)
     rightLegBodyJointDef.upperAngle = radians(this.angle_limit)
+    rightLegBodyJointDef.enableMotor = true
+    rightLegBodyJointDef.maxMotorTorque = 100000
 
     this.rightLegBodyJoint = this.world.CreateJoint(rightLegBodyJointDef)
 
 
 
 
-    var leftKneeBodyJointDef = new b2RevoluteJointDef()
+    let leftKneeBodyJointDef = new b2RevoluteJointDef()
     leftKneeBodyJointDef.bodyA = this.leg;
     leftKneeBodyJointDef.bodyB = this.knee;
     leftKneeBodyJointDef.collideConnected = false;
@@ -165,7 +168,7 @@ class Player {
     this.leftKneeBodyJoint = this.world.CreateJoint(leftKneeBodyJointDef)
 
 
-    var rightKneeBodyJointDef = new b2RevoluteJointDef()
+    let rightKneeBodyJointDef = new b2RevoluteJointDef()
     rightKneeBodyJointDef.bodyA = this.leg2;
     rightKneeBodyJointDef.bodyB = this.knee2;
     rightKneeBodyJointDef.collideConnected = false;
@@ -174,7 +177,8 @@ class Player {
     rightKneeBodyJointDef.enableLimit = true
     rightKneeBodyJointDef.lowerAngle = radians(-this.angle_limit)
     rightKneeBodyJointDef.upperAngle = radians(this.angle_limit)
-
+    rightKneeBodyJointDef.enableMotor = true
+    rightKneeBodyJointDef.maxMotorTorque = 100000
     this.rightKneeBodyJoint = this.world.CreateJoint(rightKneeBodyJointDef)
   }
     //-------
@@ -194,8 +198,8 @@ class Player {
 
 
   show() {
-    var pos = this.body.GetPosition()
-    var angle = this.body.GetAngle()
+    let pos = this.body.GetPosition()
+    let angle = this.body.GetAngle()
 
     push()
     fill(this.color)
@@ -372,8 +376,8 @@ class Player {
     this.world.DestroyJoint(this.headJoint)
 
 
-    var pos = this.body.GetPosition()
-    var angle = this.body.GetAngle()
+    let pos = this.body.GetPosition()
+    let angle = this.body.GetAngle()
 
     this.color = color(255, 0, 0, 8)
 
@@ -467,8 +471,8 @@ class Player {
   get_vertices(body) {
     let verts = []
 
-    for (var i = 0; i < body.m_fixtureList.m_shape.m_vertices.length; i++) {
-      var vert = body.GetWorldPoint(body.m_fixtureList.m_shape.m_vertices[i])
+    for (let i = 0; i < body.m_fixtureList.m_shape.m_vertices.length; i++) {
+      let vert = body.GetWorldPoint(body.m_fixtureList.m_shape.m_vertices[i])
       verts.push(new p5.Vector(vert.x * SCALE, vert.y * SCALE))
     }
 
@@ -521,12 +525,12 @@ class Player {
   //gets the output of the this.brain then converts them to actions
   think() {
 
-    var max = 0;
-    var maxIndex = 0;
+    let max = 0;
+    let maxIndex = 0;
     //get the output of the neural network
     this.decision = this.brain.feedForward(this.vision);
 
-    for (var i = 0; i < this.decision.length; i++) {
+    for (let i = 0; i < this.decision.length; i++) {
       if (this.decision[i] > max) {
         max = this.decision[i];
         maxIndex = i;
@@ -538,7 +542,7 @@ class Player {
   //---------------------------------------------------------------------------------------------------------------------------------------------------------
   //returns a clone of this player with the same brian
   clone() {
-    var clone = new Player();
+    let clone = new Player();
     clone.brain = this.brain.clone();
     clone.fitness = this.fitness;
     clone.brain.generateNetwork();
@@ -552,7 +556,7 @@ class Player {
   //this fuction does that
 
   cloneForReplay() {
-    var clone = new Player();
+    let clone = new Player();
     clone.brain = this.brain.clone();
     clone.fitness = this.fitness;
     clone.brain.generateNetwork();
@@ -573,7 +577,7 @@ class Player {
   //---------------------------------------------------------------------------------------------------------------------------------------------------------
   crossover(parent2) {
 
-    var child = new Player();
+    let child = new Player();
     child.brain = this.brain.crossover(parent2.brain);
     child.brain.generateNetwork();
     return child;

@@ -245,6 +245,11 @@ class Genome {
         }
 
         //then add this mutation to the innovationHistory
+        // console.log(from);
+        // console.log(to);
+        // console.log(connectionInnovationNumber);
+        // console.log(innoNumbers);
+        // console.log(this.genes);
         innovationHistory.push(new connectionHistory(from.number, to.number, connectionInnovationNumber, innoNumbers));
         nextConnectionNo++;
       }
@@ -255,6 +260,7 @@ class Genome {
   //returns whether the network is fully connected or not
   fullyConnected() {
 
+    //console.log("fullyconnect1");
     var maxConnections = 0;
     var nodesInLayers = []; //array which stored the amount of this.nodes in each layer
     for (var i = 0; i < this.layers; i++) {
@@ -264,6 +270,7 @@ class Genome {
     for (var i = 0; i < this.nodes.length; i++) {
       nodesInLayers[this.nodes[i].layer] += 1;
     }
+    //console.log("fullyconnect2");
     //for each layer the maximum amount of connections is the number in this layer * the number of this.nodes infront of it
     //so lets add the max for each layer together and then we will get the maximum amount of connections in the network
     for (var i = 0; i < this.layers - 1; i++) {
@@ -274,11 +281,15 @@ class Genome {
 
       maxConnections += nodesInLayers[i] * nodesInFront;
     }
-
-    if (maxConnections <= this.genes.length) { //if the number of connections is equal to the max number of connections possible then it is full
+    //console.log("fullyconnect3");
+    if (maxConnections == this.genes.length) { //if the number of connections is equal to the max number of connections possible then it is full
       return true;
     }
 
+
+    //console.log(this.genes.length);
+    //console.log(maxConnections);
+    //console.log(nodesInLayers);
     return false;
   }
 
@@ -292,7 +303,7 @@ class Genome {
 
 
     var rand1 = random(1);
-    if (rand1 < mutationRate) { // 80% of the time mutate weights
+    if (rand1 < 0.8) { // 80% of the time mutate weights
 
       for (var i = 0; i < this.genes.length; i++) {
         this.genes[i].mutateWeight();
@@ -301,14 +312,14 @@ class Genome {
 
     //5% of the time add a new connection
     var rand2 = random(1);
-    if (rand2 < 0.3) {
+    if (rand2 < 0.05) {
 
       this.addConnection(innovationHistory);
     }
 
     //1% of the time add a node
     var rand3 = random(1);
-    if (rand3 < 0.2) {
+    if (rand3 < 0.01) {
 
       this.addNode(innovationHistory);
     }
@@ -486,31 +497,30 @@ class Genome {
       textSize(10);
       fill(0);
       textAlign(CENTER, CENTER);
-      //text(nodeNumbers[i], nodePoses[i].x, nodePoses[i].y);
+      text(nodeNumbers[i], nodePoses[i].x, nodePoses[i].y);
 
     }
 
-    // print out neural network info text
-    // textAlign(RIGHT);
-    // fill(255);
-    // textSize(15);
-    // noStroke();
-    // text("car angle", nodePoses[0].x - 20, nodePoses[0].y);
-    // text("touching ground", nodePoses[1].x - 20, nodePoses[1].y);
-    // text("angular velocity", nodePoses[2].x - 20, nodePoses[2].y);
-    // text("Distance to ground", nodePoses[3].x - 20, nodePoses[3].y);
-    // text("gradient", nodePoses[4].x - 20, nodePoses[4].y);
-    // text("bias", nodePoses[5].x - 20, nodePoses[5].y);
-    // textAlign(LEFT);
-    text("Left Leg Left", nodePoses[nodePoses.length - 2].x + 50, nodePoses[nodePoses.length - 8].y);
-    text("Right Leg Left", nodePoses[nodePoses.length - 1].x + 50, nodePoses[nodePoses.length - 7].y);
-    text("Left Knee Left", nodePoses[nodePoses.length - 2].x + 50, nodePoses[nodePoses.length - 6].y);
-    text("Right Knee Left", nodePoses[nodePoses.length - 1].x + 50, nodePoses[nodePoses.length - 5].y);
-
-    text("Left Leg Right", nodePoses[nodePoses.length - 2].x + 50, nodePoses[nodePoses.length - 4].y);
-    text("Right Leg Right", nodePoses[nodePoses.length - 1].x + 50, nodePoses[nodePoses.length - 3].y);
-    text("Left Knee Right", nodePoses[nodePoses.length - 2].x + 50, nodePoses[nodePoses.length - 2].y);
-    text("Right Knee Right", nodePoses[nodePoses.length - 1].x + 50, nodePoses[nodePoses.length - 1].y);
+    textAlign(RIGHT);
+    fill(255);
+    textSize(15);
+    noStroke();
+    text("car angle", nodePoses[0].x - 20, nodePoses[0].y);
+    text("touching ground", nodePoses[1].x - 20, nodePoses[1].y);
+    text("angular velocity", nodePoses[2].x - 20, nodePoses[2].y);
+    text("Distance to ground", nodePoses[3].x - 20, nodePoses[3].y);
+    text("gradient", nodePoses[4].x - 20, nodePoses[4].y);
+    text("bias", nodePoses[5].x - 20, nodePoses[5].y);
+    // text("ground point 1", nodePoses[6].x - 20, nodePoses[6].y);
+    // text("ground point 2", nodePoses[7].x - 20, nodePoses[7].y);
+    // text("ground point 3", nodePoses[8].x - 20, nodePoses[8].y);
+    // text("ground point 4", nodePoses[9].x - 20, nodePoses[9].y);
+    // text("ground point 5", nodePoses[10].x - 20, nodePoses[10].y);
+    // text("bias", nodePoses[11].x - 20, nodePoses[11].y);
+    //
+    textAlign(LEFT);
+    text("gas", nodePoses[nodePoses.length - 2].x + 20, nodePoses[nodePoses.length - 2].y);
+    text("break", nodePoses[nodePoses.length - 1].x + 20, nodePoses[nodePoses.length - 1].y);
 
 
 
