@@ -501,16 +501,13 @@ class Genome {
 
     }
 
-    textAlign(RIGHT);
-    fill(255);
-    textSize(15);
-    noStroke();
-    text("car angle", nodePoses[0].x - 20, nodePoses[0].y);
-    text("touching ground", nodePoses[1].x - 20, nodePoses[1].y);
-    text("angular velocity", nodePoses[2].x - 20, nodePoses[2].y);
-    text("Distance to ground", nodePoses[3].x - 20, nodePoses[3].y);
-    text("gradient", nodePoses[4].x - 20, nodePoses[4].y);
-    text("bias", nodePoses[5].x - 20, nodePoses[5].y);
+
+    // text("car angle", nodePoses[0].x - 20, nodePoses[0].y);
+    // text("touching ground", nodePoses[1].x - 20, nodePoses[1].y);
+    // text("angular velocity", nodePoses[2].x - 20, nodePoses[2].y);
+    // text("Distance to ground", nodePoses[3].x - 20, nodePoses[3].y);
+    // text("gradient", nodePoses[4].x - 20, nodePoses[4].y);
+    // text("bias", nodePoses[5].x - 20, nodePoses[5].y);
     // text("ground point 1", nodePoses[6].x - 20, nodePoses[6].y);
     // text("ground point 2", nodePoses[7].x - 20, nodePoses[7].y);
     // text("ground point 3", nodePoses[8].x - 20, nodePoses[8].y);
@@ -518,9 +515,9 @@ class Genome {
     // text("ground point 5", nodePoses[10].x - 20, nodePoses[10].y);
     // text("bias", nodePoses[11].x - 20, nodePoses[11].y);
     //
-    textAlign(LEFT);
-    text("gas", nodePoses[nodePoses.length - 2].x + 20, nodePoses[nodePoses.length - 2].y);
-    text("break", nodePoses[nodePoses.length - 1].x + 20, nodePoses[nodePoses.length - 1].y);
+    // textAlign(LEFT);
+    // text("gas", nodePoses[nodePoses.length - 2].x + 20, nodePoses[nodePoses.length - 2].y);
+    // text("break", nodePoses[nodePoses.length - 1].x + 20, nodePoses[nodePoses.length - 1].y);
 
 
 
